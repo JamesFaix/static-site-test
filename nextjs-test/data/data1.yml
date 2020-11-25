@@ -1,0 +1,5 @@
+users:
+- name: bill
+  favorite-color: red
+- name: ted
+  favorite-color: blue

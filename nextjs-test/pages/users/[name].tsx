@@ -1,20 +1,20 @@
 import React from 'react';
 import { GetStaticPathsContext, GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult, InferGetStaticPropsType } from 'next';
+import { getUsers } from '../../backend/yaml-reader';
 
 interface Props {
     name: string
 }
 
 export async function getStaticPaths(ctx: GetStaticPathsContext) : Promise<GetStaticPathsResult> {
-    const ids = [1, 2, 3, 5, 8, 13];
-    const paths = ids.map(id => `/users/${id}`);
+    const users = getUsers();
+    const paths = users.map(u => `/users/${u.name}`);
     return { paths, fallback: false };
 }
 
 export async function getStaticProps(ctx: GetStaticPropsContext) : Promise<GetStaticPropsResult<Props>> {
     const { params } = ctx;
-    const { id } = params;
-    const name = `${id}-${id}`;
+    const name = params.name as string;
     return {
         props: { name },
     };
